@@ -50,14 +50,16 @@ const {
       function initMotion() {
         if (reduce) { revealAll(); return; }
 
-        // Hero entrance — text slides up, art pops in
-        gsap.timeline({ defaults: { ease: "power3.out" } })
-          .from("[data-hero-stagger] > *", {
-            y: 28, opacity: 0, duration: 0.85, stagger: 0.09,
-          })
-          .from("[data-hero-art] > *", {
-            scale: 0.9, opacity: 0, duration: 0.9, stagger: 0.12, ease: "back.out(1.5)",
-          }, "-=0.55");
+        // Hero entrance — only on pages with a hero (avoids "target not found" warnings)
+        if (document.querySelector("[data-hero-stagger]")) {
+          gsap.timeline({ defaults: { ease: "power3.out" } })
+            .from("[data-hero-stagger] > *", {
+              y: 28, opacity: 0, duration: 0.85, stagger: 0.09,
+            })
+            .from("[data-hero-art] > *", {
+              scale: 0.9, opacity: 0, duration: 0.9, stagger: 0.12, ease: "back.out(1.5)",
+            }, "-=0.55");
+        }
 
         // Scroll reveals
         gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
