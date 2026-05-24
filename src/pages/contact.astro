@@ -1,0 +1,102 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const info = [
+  { label: "Visit us", value: "21, 23, 25 Jalan Bukit 1, Kawasan MIEL, Bandar Seri Alam, 81750 Johor Bahru, Malaysia", href: null },
+  { label: "Call us", value: "607-386 3241 / 3242 / 4255", href: "tel:+6073863241" },
+  { label: "Email us", value: "export@central-vista.com", href: "mailto:export@central-vista.com" },
+  { label: "Company", value: "Central Vista (M) Sdn Bhd · Co. No. 267337-W", href: null },
+];
+---
+
+<Layout path="/contact" title="Contact — Central Vista (M) Sdn Bhd">
+  <section class="contact">
+    <div class="container contact-grid">
+      <div class="contact-info" data-reveal>
+        <span class="eyebrow">Contact us</span>
+        <h1>Let's talk business.</h1>
+        <p class="contact-lead">
+          Looking to stock our products, start an OEM project, or explore distribution?
+          Our team in Johor will get back to you promptly.
+        </p>
+
+        <ul class="info-list">
+          {info.map((i) => (
+            <li>
+              <span class="info-label">{i.label}</span>
+              {i.href
+                ? <a href={i.href} class="info-value link">{i.value}</a>
+                : <span class="info-value">{i.value}</span>}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <form class="form" data-reveal onsubmit="event.preventDefault(); this.querySelector('.form-msg').style.display='block';">
+        <h2>Send a message</h2>
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Your name" required />
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@company.com" required />
+          </div>
+          <div class="field">
+            <label for="company">Company</label>
+            <input id="company" name="company" type="text" placeholder="Optional" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="msg">Message</label>
+          <textarea id="msg" name="msg" rows="5" placeholder="Tell us a little about what you need…" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send message
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+        <p class="form-msg">Thanks — your message is ready. We'll be in touch soon.</p>
+      </form>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .contact { padding: 70px 0 0; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: 60px; align-items: start; }
+
+  .contact-info h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); margin: 18px 0 18px; letter-spacing: -0.04em; }
+  .contact-lead { font-size: 1.1rem; color: var(--ink-soft); line-height: 1.65; max-width: 440px; }
+
+  .info-list { margin-top: 38px; display: grid; gap: 4px; }
+  .info-list li { padding: 18px 0; border-top: 1px solid var(--line); display: grid; gap: 6px; }
+  .info-list li:last-child { border-bottom: 1px solid var(--line); }
+  .info-label { font-size: .76rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--red); }
+  .info-value { font-size: 1.02rem; color: var(--ink); line-height: 1.5; }
+  .info-value.link { color: var(--navy); font-weight: 600; }
+  .info-value.link:hover { color: var(--red); }
+
+  .form { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: 40px; }
+  .form h2 { font-size: 1.5rem; margin-bottom: 26px; }
+  .field { margin-bottom: 18px; display: flex; flex-direction: column; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  label { font-weight: 600; margin-bottom: 8px; font-size: .9rem; }
+  input, textarea {
+    font-family: var(--font-body); font-size: 1rem; color: var(--ink);
+    padding: 13px 15px; border: 1px solid var(--line-strong); border-radius: 11px;
+    background: var(--paper); transition: border-color .18s ease, background .18s ease;
+  }
+  input::placeholder, textarea::placeholder { color: #A2A4B8; }
+  input:focus, textarea:focus { outline: none; border-color: var(--navy); background: #fff; }
+  textarea { resize: vertical; }
+  .form .btn { margin-top: 6px; }
+  .form-msg {
+    display: none; margin-top: 18px; padding: 14px 18px; border-radius: 11px;
+    background: rgba(35,44,115,.07); color: var(--navy); font-weight: 600; font-size: .95rem;
+  }
+
+  @media (max-width: 860px) {
+    .contact-grid { grid-template-columns: 1fr; gap: 44px; }
+    .row { grid-template-columns: 1fr; }
+  }
+</style>

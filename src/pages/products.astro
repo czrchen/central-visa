@@ -1,0 +1,132 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Wave from "../components/Wave.astro";
+
+const categories = [
+  {
+    name: "Marshmallow",
+    accent: "var(--red)",
+    items: [
+      { img: "/images/products/marshmallow.jpg", name: "Marshmallow", desc: "Soft, fluffy classic marshmallows." },
+      { img: "/images/products/moshi.jpg", name: "Moshi Marshmallow", desc: "Bite-size fun in every pack." },
+      { img: "/images/products/mumble.jpg", name: "Mumble Marshmallow", desc: "Colourful, pillowy marshmallows." },
+      { img: "/images/products/icecream-mallow.jpg", name: "Ice Cream Marshmallow", desc: "Creamy ice-cream inspired mallows." },
+    ],
+  },
+  {
+    name: "Chocolate Confectionery",
+    accent: "var(--navy)",
+    items: [
+      { img: "/images/products/nninni-dip.jpg", name: "Nni Nni Marshmallow Choco Dip", desc: "Marshmallows with a chocolate-flavoured dip." },
+      { img: "/images/products/nninni-bites.jpg", name: "Nni Nni Bites", desc: "Centre-filled wafer with chocolate cream." },
+      { img: "/images/products/gatsova-cookies.jpg", name: "Gatsova Choco Cookies", desc: "Crunchy cookies dipped in chocolate." },
+      { img: "/images/products/oatwheat.jpg", name: "Oat Wheat", desc: "Oat-wheat biscuit with white chocolate." },
+    ],
+  },
+  {
+    name: "Corn Snacks",
+    accent: "var(--gold)",
+    items: [
+      { img: "/images/products/binbin.jpg", name: "The Original Bin Bin", desc: "Our signature crispy corn snack." },
+      { img: "/images/products/poppop.jpg", name: "Pop Pop", desc: "Light, poppable corn bites." },
+      { img: "/images/products/bigtop.jpg", name: "Big Top", desc: "Big-flavour crunchy corn sticks." },
+      { img: "/images/products/kaca.jpg", name: "Kaca Chicken", desc: "Savoury chicken-flavoured corn snack." },
+    ],
+  },
+];
+---
+
+<Layout path="/products" title="Products — Central Vista Snacks & Confectionery">
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow" data-reveal>Our products</span>
+      <h1 class="page-title" data-reveal>Everything we make</h1>
+      <p class="page-lead" data-reveal>
+        From marshmallows and corn snacks to chocolate confectionery — the full Central Vista
+        and CV Mallow range. OEM and private-label production welcome.
+      </p>
+    </div>
+  </section>
+
+  {categories.map((cat) => (
+    <section class="cat" style={`--c:${cat.accent}`}>
+      <div class="container">
+        <header class="cat-head" data-reveal>
+          <span class="cat-bar"></span>
+          <h2>{cat.name}</h2>
+          <span class="cat-count">{cat.items.length} products</span>
+        </header>
+        <div class="cat-grid" data-reveal-group>
+          {cat.items.map((it) => (
+            <article class="pcard">
+              <div class="pcard-media">
+                <img src={it.img} alt={it.name} loading="lazy" width="600" height="400" />
+              </div>
+              <div class="pcard-body">
+                <h3>{it.name}</h3>
+                <p>{it.desc}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="oem ribbon">
+    <Wave side="top" />
+    <Wave side="bottom" />
+    <div class="container ribbon-inner">
+      <div class="oem-box" data-reveal>
+        <div class="oem-copy">
+          <h2>Made your way</h2>
+          <p>We manufacture under OEM and private-label arrangements — your recipe and brand, produced to our certified quality standards.</p>
+        </div>
+        <a href="/contact" class="btn btn-primary">Talk to us
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-hero { padding: 64px 0 50px; }
+  .page-title { font-size: clamp(2.6rem, 6vw, 4.2rem); margin: 18px 0 18px; letter-spacing: -0.04em; }
+  .page-lead { font-size: 1.12rem; color: var(--ink-soft); max-width: 600px; line-height: 1.65; }
+
+  .cat { padding: 50px 0 0; }
+  .cat-head { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+  .cat-bar { width: 32px; height: 6px; border-radius: 6px; background: var(--c); }
+  .cat-head h2 { font-size: clamp(1.5rem, 3.2vw, 2rem); letter-spacing: -0.03em; }
+  .cat-count { margin-left: auto; font-size: .82rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+
+  .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 34px; }
+  .pcard { display: block; }
+  .pcard-media {
+    aspect-ratio: 4/3.4; overflow: hidden; border-radius: 26px; background: var(--cream);
+    box-shadow: 0 0 0 rgba(24,26,51,0);
+    transition: transform .4s cubic-bezier(.2,.8,.25,1), box-shadow .4s ease;
+  }
+  .pcard-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2,.8,.25,1); }
+  .pcard:hover .pcard-media { transform: translateY(-12px); box-shadow: 0 26px 44px rgba(218,33,40,.16); }
+  .pcard:hover .pcard-media img { transform: scale(1.08); }
+  .pcard-body { padding: 18px 6px 0; }
+  .pcard-body h3 { font-size: 1.05rem; letter-spacing: -0.02em; margin-bottom: 4px; transition: color .25s ease; }
+  .pcard:hover .pcard-body h3 { color: var(--red); }
+  .pcard-body p { color: var(--ink-soft); font-size: .9rem; line-height: 1.5; }
+
+  .oem-box {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 36px; flex-wrap: wrap;
+  }
+  .oem-box h2 { color: #fff; font-size: clamp(1.8rem, 3.6vw, 2.5rem); margin-bottom: 12px; }
+  .oem-box p { color: rgba(255,255,255,.8); max-width: 480px; }
+  .oem-box .btn { flex-shrink: 0; }
+
+  @media (max-width: 900px) { .cat-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) {
+    .cat-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+    .oem-box { padding: 40px 30px; }
+  }
+</style>
