@@ -65,7 +65,11 @@ ul { list-style: none; }
 section { position: relative; }
 
 /* ---------- Buttons ---------- */
+/* Hover "sweep" uses a clipped ::before overlay (no oversized-gradient edge bleed) */
 .btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -77,37 +81,35 @@ section { position: relative; }
   border-radius: 999px;
   border: 1.5px solid transparent;
   cursor: pointer;
-  background-size: 220% 100%;
-  background-position: right center;
-  transition: background-position .5s cubic-bezier(.6,0,.2,1), color .3s ease,
-              transform .25s ease, box-shadow .3s ease, border-color .3s ease;
+  transition: transform .25s ease, box-shadow .3s ease, color .3s ease, border-color .3s ease;
 }
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: translateX(-101%);
+  transition: transform .45s cubic-bezier(.6,0,.2,1);
+}
+.btn:hover::before { transform: translateX(0); }
 .btn svg { width: 16px; height: 16px; transition: transform .35s cubic-bezier(.6,0,.2,1); }
 .btn:hover { transform: translateY(-2px); }
 .btn:hover svg { transform: translateX(5px); }
 
 /* Primary: red, sweeps to navy ink on hover */
-.btn-primary {
-  color: #fff;
-  background-image: linear-gradient(to right, var(--ink) 0 50%, var(--red) 50% 100%);
-  box-shadow: 0 8px 20px rgba(218,33,40,.20);
-}
-.btn-primary:hover { background-position: left center; box-shadow: 0 12px 26px rgba(24,26,51,.22); }
+.btn-primary { background: var(--red); color: #fff; box-shadow: 0 8px 20px rgba(218,33,40,.20); }
+.btn-primary::before { background: var(--ink); }
+.btn-primary:hover { box-shadow: 0 12px 26px rgba(24,26,51,.22); }
 
 /* Dark (nav CTA): ink, sweeps to red on hover */
-.btn-dark {
-  color: #fff;
-  background-image: linear-gradient(to right, var(--red) 0 50%, var(--ink) 50% 100%);
-}
-.btn-dark:hover { background-position: left center; box-shadow: 0 12px 26px rgba(218,33,40,.24); }
+.btn-dark { background: var(--ink); color: #fff; }
+.btn-dark::before { background: var(--red); }
+.btn-dark:hover { box-shadow: 0 12px 26px rgba(218,33,40,.24); }
 
 /* Ghost: outline, fills with ink on hover */
-.btn-ghost {
-  color: var(--ink);
-  border-color: var(--line-strong);
-  background-image: linear-gradient(to right, var(--ink) 0 50%, transparent 50% 100%);
-}
-.btn-ghost:hover { background-position: left center; color: #fff; border-color: var(--ink); }
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+.btn-ghost::before { background: var(--ink); }
+.btn-ghost:hover { color: #fff; border-color: var(--ink); }
 
 /* ---------- Eyebrow / section headers ---------- */
 .eyebrow {

@@ -50,15 +50,17 @@ const {
       function initMotion() {
         if (reduce) { revealAll(); return; }
 
-        // Hero entrance — only on pages with a hero (avoids "target not found" warnings)
+        // Hero entrance — only on pages with a hero (avoids "target not found" warnings).
+        // Use fromTo (explicit end state) so elements always settle visible — gsap.from can
+        // "stick" at the from-state and leave the hero invisible.
         if (document.querySelector("[data-hero-stagger]")) {
           gsap.timeline({ defaults: { ease: "power3.out" } })
-            .from("[data-hero-stagger] > *", {
-              y: 28, opacity: 0, duration: 0.85, stagger: 0.09,
-            })
-            .from("[data-hero-art] > *", {
-              scale: 0.9, opacity: 0, duration: 0.9, stagger: 0.12, ease: "back.out(1.5)",
-            }, "-=0.55");
+            .fromTo("[data-hero-stagger] > *",
+              { y: 28, opacity: 0 },
+              { y: 0, opacity: 1, duration: 0.85, stagger: 0.09 })
+            .fromTo("[data-hero-art] > *",
+              { scale: 0.9, opacity: 0 },
+              { scale: 1, opacity: 1, duration: 0.9, stagger: 0.12, ease: "back.out(1.5)" }, "-=0.55");
         }
 
         // Scroll reveals
