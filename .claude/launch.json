@@ -4,8 +4,11 @@
     {
       "name": "central-vista",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
-      "port": 4321
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
+      "port": 4335
     }
   ]
 }
